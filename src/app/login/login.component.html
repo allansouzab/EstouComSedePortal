@@ -1,0 +1,15 @@
+<div class="mat-elevation-z8 form-size form-size">
+    <h4 class="text-center">Efetuar login</h4>
+    <form (submit)="efetuarLogin()">
+        <div class="form-group">
+            <label for="Nome">Usuário</label>
+            <input type="text" class="form-control" id="Usuario" placeholder="Seu nome de usuário" name="Usuario" [(ngModel)]="login.User">
+        </div>
+        <div class="form-group">
+            <label for="Senha">Senha</label>
+            <input type="password" class="form-control" id="Senha" placeholder="Sua senha" name="Senha" [(ngModel)]="login.Pass">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+</div>

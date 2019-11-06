@@ -1,0 +1,27 @@
+<div class="mat-elevation-z8 form-size">
+    <h4 class="text-center">Cadastrar nova área de revisão</h4>
+    <form (ngSubmit)="solicitar()">
+        <div class="form-group">
+            <label for="Nome">Nome</label>
+            <input type="text" class="form-control" id="Nome" aria-describedby="emailHelp"
+                placeholder="Nome Completo" [(ngModel)]="revisao.Nome" name="Nome">
+        </div>
+        <div class="form-group">
+            <label for="Bairro">Bairro</label>
+            <input type="text" class="form-control" id="Bairro" placeholder="Bairro de Revisão" [(ngModel)]="revisao.Bairro" name="Bairro">
+        </div>
+        <div class="form-group">
+            <label for="Cidade">Cidade</label>
+            <input type="text" class="form-control" id="Cidade" placeholder="Cidade de Revisão" [(ngModel)]="revisao.Cidade" name="Cidade">
+        </div>
+        <div class="form-group">
+            <label for="Estado">Estado</label>
+            <input type="text" class="form-control" id="Estado" placeholder="Estado de Revisão" [(ngModel)]="revisao.Estado" name="Estado">
+        </div>
+        <div class="form-group">
+            <label for="Obs">Observação</label>
+            <input type="text-area" class="form-control" id="Obs" [(ngModel)]="revisao.Observacao" name="Observacao">
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>

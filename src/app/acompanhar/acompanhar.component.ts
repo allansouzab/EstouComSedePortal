@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { RevisaoService } from '../services/revisao/revisao.service';
+import { User } from '../core/User';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../services/auth/auth.service';
 
 export interface Revisao {
   Nome: string;
@@ -18,18 +21,29 @@ export interface Revisao {
   templateUrl: './acompanhar.component.html',
   styleUrls: ['./acompanhar.component.css']
 })
-export class AcompanharComponent implements OnInit {
+export class AcompanharComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['Nome', 'Bairro', 'Cidade', 'Estado', 'DataSolicitacao', 'Status', 'Observacao', 'btn-success', 'btn-danger'];
   dataSource: MatTableDataSource<Revisao>;
+  currentUser: User;
+  currentUserSubscription: Subscription;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private revisaoService: RevisaoService) { }
+  constructor(private revisaoService: RevisaoService, private authService: AuthService) {
+    this.currentUserSubscription = this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
 
   ngOnInit() {
     debugger
     this.getAllSolicitacoes();
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.currentUserSubscription.unsubscribe();
   }
 
   getAllSolicitacoes() {
@@ -42,7 +56,7 @@ export class AcompanharComponent implements OnInit {
     });
   }
 
-  approveSolicitacao(id: any){
+  approveSolicitacao(id: any) {
     debugger
     this.revisaoService.approveSolicitacao(id).subscribe(data => {
       debugger
@@ -50,7 +64,7 @@ export class AcompanharComponent implements OnInit {
     });
   }
 
-  reproveSolicitacao(id: any){
+  reproveSolicitacao(id: any) {
     debugger
     this.revisaoService.reproveSolicitacao(id).subscribe(data => {
       debugger

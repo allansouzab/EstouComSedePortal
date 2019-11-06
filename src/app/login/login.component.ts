@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-class Login {
-  User: string;
-  Pass: string;
-  Role: string;
-}
+import { AuthService } from '../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { User } from '../core/User';
 
 @Component({
   selector: 'app-login',
@@ -13,22 +10,21 @@ class Login {
 })
 export class LoginComponent implements OnInit {
 
-  login = new Login();
+  user = new User();
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) {
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
   }
 
-  efetuarLogin(){
+  efetuarLogin() {
     debugger
-    if(this.login.User == "Admin" && this.login.Pass == "Admin"){
-      this.login.Role = "Admin";
-    }
-    else{
-      this.login.Role = "User";
-    }
-    localStorage.setItem('currentUser', JSON.stringify(this.login));
+    this.authService.login(this.user);
+    this.router.navigate(['/']);
   }
 
 }
